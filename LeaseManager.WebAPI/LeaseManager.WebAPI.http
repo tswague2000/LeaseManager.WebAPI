@@ -1,0 +1,6 @@
+@LeaseManager.WebAPI_HostAddress = http://localhost:5243
+
+GET {{LeaseManager.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
