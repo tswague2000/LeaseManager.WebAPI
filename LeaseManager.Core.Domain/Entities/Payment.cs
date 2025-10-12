@@ -1,6 +1,7 @@
 ﻿using LeaseManager.Core.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace LeaseManager.Core.Domain.Entities
     public class Payment
     {
         #region Propriétés principales
+        [Key]
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; } = DateTime.UtcNow;

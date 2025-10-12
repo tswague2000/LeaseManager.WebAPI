@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LeaseManager.Core.Infrastuctures.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,13 @@ namespace LeaseManager.Infrastucture.IUnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         #region Champs privés
-        private readonly DbContext _context;
+        private readonly AppDbContext _context;
         private IDbContextTransaction? _transaction;
         private bool _disposed = false;
         #endregion
 
         #region Constructeur
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(AppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
