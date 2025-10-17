@@ -13,17 +13,13 @@ namespace LeaseManager.Core.Domain.Entities
     /// </summary>
     public class Payment
     {
-        #region Propriétés principales
-        [Key]
         public int Id { get; set; }
+        public int LeaseId { get; set; }
+        public Lease Lease { get; set; }
+
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
-        public PaymentStatus Status { get; set; }
-        #endregion
-
-        #region Relations
-        public int LeaseId { get; set; }
-        public Lease? Lease { get; set; }
-        #endregion
+        public PaymentStatus Status { get; set; } = PaymentStatus.Completed;
+        public PaymentMethod Method { get; set; } = PaymentMethod.BankTransfer;
     }
 }

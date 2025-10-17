@@ -8,84 +8,65 @@ namespace LeaseManager.Core.Infrastuctures.Data.TypeConfigurations
     /// Configuration du type Property pour Entity Framework Core.
     /// Définit les contraintes, les types de colonnes, et les relations avec les autres entités.
     /// </summary>
-    public class PropertyEntityTypeConfiguration : IEntityTypeConfiguration<Property>
+    public class PropertyConfiguration : IEntityTypeConfiguration<Property>
     {
         public void Configure(EntityTypeBuilder<Property> builder)
         {
-            // Nom de la table
             builder.ToTable("Properties");
 
-            #region Clé primaire
+            // Primary Key
             builder.HasKey(p => p.Id);
-            #endregion
 
-            #region Propriétés
+            // Properties
             builder.Property(p => p.Title)
                    .IsRequired()
-                   .HasMaxLength(100);
+                   .HasMaxLength(150);
 
             builder.Property(p => p.Address)
                    .IsRequired()
-                   .HasMaxLength(200);
+                   .HasMaxLength(250);
 
             builder.Property(p => p.City)
                    .IsRequired()
                    .HasMaxLength(100);
 
-            builder.Property(p => p.PostalCode)
-                   .HasMaxLength(10);
+            builder.Property(p => p.Province)
+                   .IsRequired()
+                   .HasMaxLength(100);
 
-            builder.Property(p => p.Price)
+            builder.Property(p => p.PostalCode)
+                   .IsRequired()
+                   .HasMaxLength(20);
+
+            builder.Property(p => p.RentPrice)
                    .IsRequired()
                    .HasColumnType("decimal(18,2)");
 
-            builder.Property(p => p.Rooms)
+            builder.Property(p => p.Bedrooms)
                    .IsRequired();
 
-            builder.Property(p => p.Bathroom)
+            builder.Property(p => p.Bathrooms)
                    .IsRequired();
 
-            builder.Property(p => p.Surface)
-                   .HasColumnType("float");
-
-            builder.Property(p => p.Description)
-                   .HasMaxLength(1000);
-
-            builder.Property(p => p.CreatedAt)
-                   .HasColumnType("datetime2");
-
-            // Enumération : Type de propriété
-            builder.Property(p => p.Type)
+            builder.Property(p => p.IsAvailable)
                    .IsRequired()
-                   .HasConversion<string>()
-                   .HasMaxLength(50);
+                   .HasDefaultValue(true);
 
-            // Enumération : Statut de la propriété
-            builder.Property(p => p.Status)
-                   .IsRequired()
-                   .HasConversion<string>()
-                   .HasMaxLength(50);
-            #endregion
-
-            #region Relations
-            // Une propriété appartient à un propriétaire (User)
+            // Relationships
             builder.HasOne(p => p.Owner)
-                   .WithMany(u => u.OwnedProperties)
+                   .WithMany(o => o.Properties)
                    .HasForeignKey(p => p.OwnerId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
-            // Une propriété peut avoir plusieurs images
             builder.HasMany(p => p.Images)
                    .WithOne(i => i.Property)
                    .HasForeignKey(i => i.PropertyId)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            // Une propriété peut être liée à plusieurs baux
             builder.HasMany(p => p.Leases)
                    .WithOne(l => l.Property)
                    .HasForeignKey(l => l.PropertyId)
-                   .OnDelete(DeleteBehavior.Cascade);
-            #endregion
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

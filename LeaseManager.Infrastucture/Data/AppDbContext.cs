@@ -1,6 +1,7 @@
 ﻿using LeaseManager.Core.Domain.Entities;
 using LeaseManager.Core.Infrastuctures.Data.TypeConfigurations;
 using LeaseManager.Infrastructure.Persistence.Configurations;
+using LeaseManager.Infrastucture.Data.TypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
@@ -30,19 +31,25 @@ namespace LeaseManager.Core.Infrastuctures.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new LeaseEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new PaymentEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new PropertyEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OwnerEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TenantEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new PropertyConfiguration());
             modelBuilder.ApplyConfiguration(new PropertyImageEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new LeaseConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MaintenanceRequestEntityTypeConfiguration());
         }
         #endregion
 
         #region DbSets
         public DbSet<Property> Properties { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Lease> Leases { get; set; } 
-        public DbSet<PropertyImage> PropertyImages { get; set; } 
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
+        public DbSet<Lease> Leases { get; set; }
+        public DbSet<PropertyImage> PropertyImages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         #endregion
     }

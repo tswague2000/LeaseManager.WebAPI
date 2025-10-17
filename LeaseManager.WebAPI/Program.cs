@@ -1,6 +1,7 @@
+using LeaseManager.Core.FrameWork;
+using LeaseManager.Core.FrameWork.Interface;
 using LeaseManager.Core.Infrastuctures.Data;
-using LeaseManager.Infrastucture.IUnitOfWork;
-using LeaseManager.Infrastucture.Repositories;
+using LeaseManager.WebAPI.Application.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 
 #endregion dependency injections
 

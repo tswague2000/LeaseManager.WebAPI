@@ -1,7 +1,9 @@
-﻿using System;
+﻿using LeaseManager.Core.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,23 +14,20 @@ namespace LeaseManager.Core.Domain.Entities
     /// </summary>
     public class Lease
     {
-        #region Propriétés principales
-
-        [Key]
         public int Id { get; set; }
+        public int PropertyId { get; set; }
+        public Property Property { get; set; }
+
+        public int TenantId { get; set; }
+        public Tenant Tenant { get; set; }
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal MonthlyRent { get; set; }
-        #endregion
+        public LeaseStatus Status { get; set; } = LeaseStatus.Active;
 
-        #region Relations
-        public int PropertyId { get; set; }
-        public Property? Property { get; set; }
+        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
+        public ICollection<Document> Documents { get; set; } = new List<Document>();
 
-        public int TenantId { get; set; }
-        public User? Tenant { get; set; }
-
-        public ICollection<Payment>? Payments { get; set; }
-        #endregion
     }
 }

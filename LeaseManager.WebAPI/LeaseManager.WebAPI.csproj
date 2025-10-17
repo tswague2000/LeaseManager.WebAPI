@@ -21,7 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LeaseManager.Core.Domain\LeaseManager.Core.Domain.csproj" />
+    <Folder Include="Application\DTOs\" />
+    <Folder Include="Application\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LeaseManager.Infrastucture\LeaseManager.Infrastucture.csproj" />
   </ItemGroup>
 

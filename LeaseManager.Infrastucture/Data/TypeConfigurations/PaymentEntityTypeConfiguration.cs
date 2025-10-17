@@ -12,38 +12,34 @@ namespace LeaseManager.Core.Infrastuctures.Data.TypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Payment> builder)
         {
-            // Nom de la table
             builder.ToTable("Payments");
 
-            #region Clé primaire
+            // Primary Key
             builder.HasKey(p => p.Id);
-            #endregion
 
-            #region Propriétés
-            // Montant payé
+            // Properties
             builder.Property(p => p.Amount)
                    .IsRequired()
                    .HasColumnType("decimal(18,2)");
 
-            // Date du paiement
             builder.Property(p => p.PaymentDate)
-                   .IsRequired()
-                   .HasColumnType("datetime2");
+                   .IsRequired();
 
-            // Statut du paiement (enum)
             builder.Property(p => p.Status)
                    .IsRequired()
-                   .HasConversion<string>() // Stocke le nom de l’enum comme texte ("Paid", "Pending", etc.)
+                   .HasConversion<string>()
                    .HasMaxLength(50);
-            #endregion
 
-            #region Relations
-            // Un paiement appartient à un bail
+            builder.Property(p => p.Method)
+                   .IsRequired()
+                   .HasConversion<string>()
+                   .HasMaxLength(50);
+
+            // Relationships
             builder.HasOne(p => p.Lease)
                    .WithMany(l => l.Payments)
                    .HasForeignKey(p => p.LeaseId)
                    .OnDelete(DeleteBehavior.Cascade);
-            #endregion
         }
     }
 }

@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeaseManager.Core.Domain.Entities
 {
@@ -15,28 +12,50 @@ namespace LeaseManager.Core.Domain.Entities
     public class Property
     {
         #region Propriétés principales
-        [Key]
 
         public int Id { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string City { get; set; } = string.Empty;
-        public string? PostalCode { get; set; }
-        public decimal Price { get; set; }
-        public PropertyType Type { get; set; }
-        public PropertyStatus Status { get; set; }
-        public int Rooms { get; set; }
-        public int Bathroom { get; set; }
-        public double? Surface { get; set; }
-        public string? Description { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [Required]
+        public required string Title { get; set; }
+
+        [Required]
+        public required string Address { get; set; } = string.Empty;
+
+        [Required]
+        public required string City { get; set; } = string.Empty;
+
+        [Required]
+        public required string Province { get; set; } = string.Empty;
+
+        [Required]
+        public required string PostalCode { get; set; } = string.Empty;
+
+        [Required]
+        public decimal RentPrice { get; set; }
+
+        [Required]
+        public int Bedrooms { get; set; }
+
+        [Required]
+        public int Bathrooms { get; set; }
+
+        public bool IsAvailable { get; set; } = true;
+
+        public int OwnerId { get; set; }
+
+        [Required]
+        public required Owner Owner { get; set; }
+
         #endregion
 
         #region Relations
-        public int OwnerId { get; set; }
-        public User? Owner { get; set; }
-        public ICollection<PropertyImage>? Images { get; set; }
-        public ICollection<Lease>? Leases { get; set; }
+
+        [Required]
+        public ICollection<PropertyImage> Images { get; set; } = new List<PropertyImage>();
+
+        [Required]
+        public ICollection<Lease> Leases { get; set; } = new List<Lease>();
+
         #endregion
     }
 }

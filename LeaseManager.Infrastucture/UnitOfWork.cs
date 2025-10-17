@@ -1,4 +1,5 @@
-﻿using LeaseManager.Core.Infrastuctures.Data;
+﻿using LeaseManager.Core.FrameWork.Interface;
+using LeaseManager.Core.Infrastuctures.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeaseManager.Infrastucture.IUnitOfWork
+namespace LeaseManager.Core.FrameWork
 {
     /// <summary>
     /// Implémente le pattern Unit of Work pour gérer les transactions et le cycle de vie du DbContext.

@@ -10,38 +10,26 @@ namespace LeaseManager.Infrastructure.Persistence.Configurations
         /// </summary>
         public class PropertyImageEntityTypeConfiguration : IEntityTypeConfiguration<PropertyImage>
         {
-            #region IEntityTypeConfiguration Implementation
+        public void Configure(EntityTypeBuilder<PropertyImage> builder)
+        {
+            builder.ToTable("PropertyImages");
 
-            /// <summary>
-            /// Configure les propriétés et les relations de l'entité PropertyImage.
-            /// </summary>
-            /// <param name="builder">Le constructeur d'entité pour PropertyImage.</param>
-            public void Configure(EntityTypeBuilder<PropertyImage> builder)
-            {
-                #region Table & Key
-                builder.ToTable("PropertyImages");
+            // Primary Key
+            builder.HasKey(pi => pi.Id);
 
-                builder.HasKey(pi => pi.Id);
+            // Properties
+            builder.Property(pi => pi.ImageUrl)
+                   .IsRequired()
+                   .HasMaxLength(500);
 
-                #endregion
+            builder.Property(pi => pi.Description)
+                   .HasMaxLength(250);
 
-                #region Properties
-
-                builder.Property(pi => pi.ImageUrl)
-                       .IsRequired()
-                       .HasMaxLength(500);
-
-                #endregion
-
-                #region Relationships
-                builder.HasOne(pi => pi.Property)
-                       .WithMany(p => p.Images)
-                       .HasForeignKey(pi => pi.PropertyId)
-                       .OnDelete(DeleteBehavior.Cascade);
-
-                #endregion
-            }
-
-            #endregion
+            // Relationships
+            builder.HasOne(pi => pi.Property)
+                   .WithMany(p => p.Images)
+                   .HasForeignKey(pi => pi.PropertyId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
+    }
 }

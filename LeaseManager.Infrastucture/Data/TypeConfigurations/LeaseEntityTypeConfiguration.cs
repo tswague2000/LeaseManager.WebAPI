@@ -1,4 +1,5 @@
 ﻿using LeaseManager.Core.Domain.Entities;
+using LeaseManager.Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,50 +9,57 @@ namespace LeaseManager.Core.Infrastuctures.Data.TypeConfigurations
     /// Configuration du type Lease pour Entity Framework Core.
     /// Définit les contraintes, les relations et les propriétés spécifiques à la table Lease.
     /// </summary>
-    public class LeaseEntityTypeConfiguration : IEntityTypeConfiguration<Lease>
+    public class LeaseConfiguration : IEntityTypeConfiguration<Lease>
     {
         public void Configure(EntityTypeBuilder<Lease> builder)
         {
-            // Nom de la table
             builder.ToTable("Leases");
 
-            #region Clé primaire
+            // Primary Key
             builder.HasKey(l => l.Id);
-            #endregion
 
-            #region Propriétés
+            // Properties
             builder.Property(l => l.StartDate)
-                   .IsRequired()
-                   .HasColumnType("date");
+                   .IsRequired();
 
             builder.Property(l => l.EndDate)
-                   .IsRequired()
-                   .HasColumnType("date");
+                   .IsRequired();
 
             builder.Property(l => l.MonthlyRent)
                    .IsRequired()
-                   .HasColumnType("decimal(18,2)");
-            #endregion
+                   .HasColumnType("decimal(10,2)");
 
-            #region Relations
-            // Relation : un bail appartient à une propriété
+            builder.Property(l => l.Status)
+                   .IsRequired()
+                   .HasConversion<string>() // store enum as string
+                   .HasMaxLength(50)
+                   .HasDefaultValue(LeaseStatus.Active);
+
+            // Relationships
+
+            // Each Lease belongs to one Property
             builder.HasOne(l => l.Property)
                    .WithMany(p => p.Leases)
                    .HasForeignKey(l => l.PropertyId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
 
-            // Relation : un bail appartient à un locataire (User)
+            // Each Lease belongs to one Tenant
             builder.HasOne(l => l.Tenant)
-                   .WithMany()
+                   .WithMany(t => t.Leases)
                    .HasForeignKey(l => l.TenantId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            // Relation : un bail peut avoir plusieurs paiements
+            // Each Lease can have many Payments
             builder.HasMany(l => l.Payments)
                    .WithOne(p => p.Lease)
                    .HasForeignKey(p => p.LeaseId)
                    .OnDelete(DeleteBehavior.Cascade);
-            #endregion
+
+            // Each Lease can have many Documents
+            builder.HasMany(l => l.Documents)
+                   .WithOne(d => d.Lease)
+                   .HasForeignKey(d => d.LeaseId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
