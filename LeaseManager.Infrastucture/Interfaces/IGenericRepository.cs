@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LeaseManager.Core.FrameWork.Interface
+﻿namespace LeaseManager.Core.FrameWork.Interface
 {
-   
+
     /// <summary>
     /// Interface générique pour les opérations CRUD de base.
     /// </summary>

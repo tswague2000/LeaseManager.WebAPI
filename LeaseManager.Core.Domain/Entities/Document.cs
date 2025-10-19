@@ -6,7 +6,7 @@ public class Document
     public int Id { get; set; }
     public int LeaseId { get; set; }
 
-    [Required] 
+    [Required]
     public required string FileName { get; set; }
 
     [Required]
@@ -14,6 +14,6 @@ public class Document
 
     public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
 
-    [Required] 
+    [Required]
     public required Lease Lease { get; set; }
 }

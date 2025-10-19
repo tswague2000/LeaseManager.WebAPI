@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LeaseManager.Infrastructure.Persistence.Configurations
 {
-        /// <summary>
-        /// Configuration de l'entité PropertyImage pour Entity Framework Core.
-        /// Définit la table, la clé primaire, les propriétés et les relations.
-        /// </summary>
-        public class PropertyImageEntityTypeConfiguration : IEntityTypeConfiguration<PropertyImage>
-        {
+    /// <summary>
+    /// Configuration de l'entité PropertyImage pour Entity Framework Core.
+    /// Définit la table, la clé primaire, les propriétés et les relations.
+    /// </summary>
+    public class PropertyImageEntityTypeConfiguration : IEntityTypeConfiguration<PropertyImage>
+    {
         public void Configure(EntityTypeBuilder<PropertyImage> builder)
         {
             builder.ToTable("PropertyImages");

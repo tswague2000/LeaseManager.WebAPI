@@ -1,17 +1,9 @@
 ﻿using LeaseManager.Core.FrameWork.Interface;
 using LeaseManager.Core.Infrastuctures.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeaseManager.WebAPI.Application.Repository
 {
-    public class GenericRepository
-    {
-    }
 
     /// <summary>
     /// Implémentation générique du repository pour les opérations CRUD de base.

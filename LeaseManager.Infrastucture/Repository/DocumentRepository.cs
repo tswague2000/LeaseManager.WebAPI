@@ -1,5 +1,4 @@
-﻿using LeaseManager.Core.FrameWork.Interface;
-using LeaseManager.Core.Infrastuctures.Data;
+﻿using LeaseManager.Core.Infrastuctures.Data;
 using LeaseManager.Infrastucture.Interfaces;
 
 namespace LeaseManager.WebAPI.Application.Repository

@@ -2,15 +2,10 @@
 using LeaseManager.Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeaseManager.Infrastucture.Data.TypeConfigurations
 {
-  
+
     public class MaintenanceRequestEntityTypeConfiguration : IEntityTypeConfiguration<MaintenanceRequest>
     {
         public void Configure(EntityTypeBuilder<MaintenanceRequest> builder)

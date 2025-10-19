@@ -1,12 +1,9 @@
 ﻿using LeaseManager.Core.FrameWork.Interface;
 using LeaseManager.Core.Infrastuctures.Data;
-using Microsoft.EntityFrameworkCore;
+using LeaseManager.Infrastucture.Interfaces;
+using LeaseManager.WebAPI.Application.Repository;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LeaseManager.Core.FrameWork
 {
@@ -21,10 +18,31 @@ namespace LeaseManager.Core.FrameWork
         private bool _disposed = false;
         #endregion
 
+        #region champs publics
+        public IDocumentRepository DocumentRepository { get; }
+        public ILeaseRepository LeaseRepository { get; }
+        public IPropertyRepository PropertyRepository { get; }
+        public IOwnerRepository OwnerRepository { get; }
+        public ITenantRepository TenantRepository { get; }
+        public IMaintenanceRequestRepository MaintenanceRequestRepository { get; }
+        public IPaymentRepository PaymentRepository { get; }
+        public IPropertyImageRepository PopertyImageRepository { get; }
+
+        #endregion
+
         #region Constructeur
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
+            DocumentRepository = new DocumentRepository(_context);
+            LeaseRepository = new LeaseRepository(_context);
+            PropertyRepository = new PropertyRepository(_context);
+            OwnerRepository = new OwnerRepository(_context);
+            TenantRepository = new TenantRepository(_context);
+            MaintenanceRequestRepository = new MaintenanceRequestRepository(_context);
+            PaymentRepository = new PaymentRepository(_context);
+            PopertyImageRepository = new PropertyImageRepository(_context);
+
 
         }
         #endregion

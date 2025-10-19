@@ -1,6 +1,7 @@
 using LeaseManager.Core.FrameWork;
 using LeaseManager.Core.FrameWork.Interface;
 using LeaseManager.Core.Infrastuctures.Data;
+using LeaseManager.Infrastucture.Interfaces;
 using LeaseManager.WebAPI.Application.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +24,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
+builder.Services.AddScoped<ITenantRepository, TenantRepository>();
+builder.Services.AddScoped<ILeaseRepository, LeaseRepository>();
+builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
+builder.Services.AddScoped<IMaintenanceRequestRepository, MaintenanceRequestRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
 
 #endregion dependency injections
 
