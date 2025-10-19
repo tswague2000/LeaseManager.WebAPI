@@ -144,6 +144,7 @@ Contient les images liées à une propriété.
   - **Infrastructure** — Base de données, repositories (EF Core)  
   - **Application** — Logique métier (services, règles de gestion)  
   - **API** — Endpoints REST (controllers)  
+  Controller → <T Entity)Service → <T Entity)ServiceRepository → <T Entity)ServiceRepository → GenericRepository → AppDbContext → Database
 
 ---
 
