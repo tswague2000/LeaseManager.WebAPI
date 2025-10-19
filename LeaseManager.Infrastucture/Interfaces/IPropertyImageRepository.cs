@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LeaseManager.Infrastucture.Interfaces
 {
-    public interface IPropoertyRepository : IGenericRepository<Property>
+    public interface IPropertyImageRepository : IGenericRepository<PropertyImage>
     {
     }
 }

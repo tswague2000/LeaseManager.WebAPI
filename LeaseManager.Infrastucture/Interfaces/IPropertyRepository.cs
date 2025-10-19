@@ -1,4 +1,5 @@
-﻿using LeaseManager.Core.FrameWork.Interface;
+﻿using LeaseManager.Core.Domain.Entities;
+using LeaseManager.Core.FrameWork.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LeaseManager.Infrastucture.Interfaces
 {
-    public interface IPropertyImage : IGenericRepository<IPropertyImage>
+    public interface IPropertyRepository : IGenericRepository<Property>
     {
     }
 }

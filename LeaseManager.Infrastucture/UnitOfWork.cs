@@ -24,7 +24,8 @@ namespace LeaseManager.Core.FrameWork
         #region Constructeur
         public UnitOfWork(AppDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
+
         }
         #endregion
 
