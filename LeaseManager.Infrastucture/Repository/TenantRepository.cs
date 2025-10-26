@@ -1,12 +1,16 @@
 ﻿using LeaseManager.Core.Domain.Entities;
+using LeaseManager.Core.Domain.Interfaces;
 using LeaseManager.Core.Infrastuctures.Data;
-using LeaseManager.Infrastucture.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeaseManager.WebAPI.Application.Repository
 {
-    public class TenantRepository(AppDbContext context) : GenericRepository<Tenant>(context), ITenantRepository
+    public class TenantRepository : GenericRepository<Tenant>, ITenantRepository
     {
+        public TenantRepository(AppDbContext context) : base(context)
+        {
+        }
+
         public async Task<Tenant?> GetTenantWithLeasesAsync(int tenantId)
         {
             return await _dbSet

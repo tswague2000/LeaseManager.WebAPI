@@ -1,6 +1,6 @@
 ﻿using LeaseManager.Core.Domain.Entities;
+using LeaseManager.Core.Domain.Interfaces;
 using LeaseManager.Core.Infrastuctures.Data;
-using LeaseManager.Infrastucture.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeaseManager.WebAPI.Application.Repository

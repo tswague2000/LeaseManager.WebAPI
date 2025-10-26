@@ -1,5 +1,5 @@
 ﻿using LeaseManager.Core.Domain.Entities;
-using LeaseManager.Core.FrameWork.Interface;
+using LeaseManager.Core.Domain.Interfaces;
 using LeaseManager.WebAPI.Application.Common.Interfaces;
 using static LeaseManager.WebAPI.Application.DTOs.OwnerDTOs;
 

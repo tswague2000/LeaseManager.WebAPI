@@ -1,6 +1,5 @@
-﻿using LeaseManager.Core.FrameWork.Interface;
+﻿using LeaseManager.Core.Domain.Interfaces;
 using LeaseManager.Core.Infrastuctures.Data;
-using LeaseManager.Infrastucture.Interfaces;
 using LeaseManager.WebAPI.Application.Repository;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -26,7 +25,7 @@ namespace LeaseManager.Core.FrameWork
         public ITenantRepository TenantRepository { get; }
         public IMaintenanceRequestRepository MaintenanceRequestRepository { get; }
         public IPaymentRepository PaymentRepository { get; }
-        public IPropertyImageRepository PopertyImageRepository { get; }
+        public IPropertyImageRepository PropertyImageRepository { get; }
 
         #endregion
 
@@ -41,7 +40,7 @@ namespace LeaseManager.Core.FrameWork
             TenantRepository = new TenantRepository(_context);
             MaintenanceRequestRepository = new MaintenanceRequestRepository(_context);
             PaymentRepository = new PaymentRepository(_context);
-            PopertyImageRepository = new PropertyImageRepository(_context);
+            PropertyImageRepository = new PropertyImageRepository(_context);
 
 
         }

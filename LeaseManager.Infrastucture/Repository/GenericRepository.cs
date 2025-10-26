@@ -1,4 +1,4 @@
-﻿using LeaseManager.Core.FrameWork.Interface;
+﻿using LeaseManager.Core.Domain.Interfaces;
 using LeaseManager.Core.Infrastuctures.Data;
 using Microsoft.EntityFrameworkCore;
 

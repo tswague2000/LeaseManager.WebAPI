@@ -23,4 +23,8 @@
     <ProjectReference Include="..\LeaseManager.Core.Domain\LeaseManager.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>
