@@ -1,61 +1,61 @@
-# ?? Tests Unitaires - Architecture et Organisation
+﻿# 🧪 Tests Unitaires - Architecture et Organisation
 
 ## Structure des Tests
 
-Les tests sont organis�s par service dans le dossier `ProjectTest/Services/` avec une classe par m�thode.
+Les tests sont organisés par service dans le dossier `ProjectTest/Services/` avec une classe par méthode.
 
 ### Organisation par Service
 
 #### LeaseService
 ```
 LeaseServiceGetAllAsyncTests.cs
-??? GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
-??? GetAllAsync_WithEmptyList_ShouldReturnEmptyCollection()
-??? GetAllAsync_ShouldCallRepositoryGetAllAsyncOnce()
+├── GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
+├── GetAllAsync_WithEmptyList_ShouldReturnEmptyCollection()
+└── GetAllAsync_ShouldCallRepositoryGetAllAsyncOnce()
 
 LeaseServiceGetByIdAsyncTests.cs
-??? GetByIdAsync_WithValidId_ShouldReturnLease()
-??? GetByIdAsync_WithInvalidId_ShouldReturnNull()
-??? GetByIdAsync_ShouldCallRepositoryWithCorrectId()
+├── GetByIdAsync_WithValidId_ShouldReturnLease()
+├── GetByIdAsync_WithInvalidId_ShouldReturnNull()
+└── GetByIdAsync_ShouldCallRepositoryWithCorrectId()
 
 LeaseServiceCreateAsyncTests.cs
-??? CreateAsync_WithValidData_ShouldCreateLease()
-??? CreateAsync_WithInvalidProperty_ShouldThrowException()
-??? CreateAsync_WithInvalidTenant_ShouldThrowException()
-??? CreateAsync_ShouldSaveChanges()
+├── CreateAsync_WithValidData_ShouldCreateLease()
+├── CreateAsync_WithInvalidProperty_ShouldThrowException()
+├── CreateAsync_WithInvalidTenant_ShouldThrowException()
+└── CreateAsync_ShouldSaveChanges()
 
 LeaseServiceUpdateAsyncTests.cs
-??? UpdateAsync_WithValidData_ShouldUpdateLease()
-??? UpdateAsync_WithInvalidId_ShouldReturnFalse()
-??? UpdateAsync_WithAllFields_ShouldUpdateAll()
-??? UpdateAsync_WithPartialData_ShouldUpdateOnlyProvidedFields()
+├── UpdateAsync_WithValidData_ShouldUpdateLease()
+├── UpdateAsync_WithInvalidId_ShouldReturnFalse()
+├── UpdateAsync_WithAllFields_ShouldUpdateAll()
+└── UpdateAsync_WithPartialData_ShouldUpdateOnlyProvidedFields()
 
 LeaseServiceDeleteAsyncTests.cs
-??? DeleteAsync_WithValidId_ShouldDeleteLease()
-??? DeleteAsync_WithInvalidId_ShouldReturnFalse()
-??? DeleteAsync_ShouldSaveChanges()
+├── DeleteAsync_WithValidId_ShouldDeleteLease()
+├── DeleteAsync_WithInvalidId_ShouldReturnFalse()
+└── DeleteAsync_ShouldSaveChanges()
 ```
 
 #### OwnerService
 ```
 OwnerServiceGetAllAsyncTests.cs
-??? GetAllAsync_WithMultipleOwners_ShouldReturnAllOwners()
-??? GetAllAsync_WithEmptyList_ShouldReturnEmptyCollection()
-??? GetAllAsync_ShouldCallRepositoryOnce()
+├── GetAllAsync_WithMultipleOwners_ShouldReturnAllOwners()
+├── GetAllAsync_WithEmptyList_ShouldReturnEmptyCollection()
+└── GetAllAsync_ShouldCallRepositoryOnce()
 
 OwnerServiceCreateAsyncTests.cs
-??? CreateAsync_WithValidData_ShouldCreateOwner()
-??? CreateAsync_WithDuplicateEmail_ShouldThrowException()
-??? CreateAsync_ShouldSaveChanges()
+├── CreateAsync_WithValidData_ShouldCreateOwner()
+├── CreateAsync_WithDuplicateEmail_ShouldThrowException()
+└── CreateAsync_ShouldSaveChanges()
 
 OwnerServiceUpdateAsyncTests.cs
-??? UpdateAsync_WithValidData_ShouldUpdateOwner()
-??? UpdateAsync_WithInvalidId_ShouldReturnFalse()
-??? UpdateAsync_ShouldCallUpdate()
+├── UpdateAsync_WithValidData_ShouldUpdateOwner()
+├── UpdateAsync_WithInvalidId_ShouldReturnFalse()
+└── UpdateAsync_ShouldCallUpdate()
 
 OwnerServiceDeleteAsyncTests.cs
-??? DeleteAsync_WithValidId_ShouldDeleteOwner()
-??? DeleteAsync_WithInvalidId_ShouldReturnFalse()
+├── DeleteAsync_WithValidId_ShouldDeleteOwner()
+└── DeleteAsync_WithInvalidId_ShouldReturnFalse()
 ```
 
 ## Pattern AAA (Arrange-Act-Assert)
@@ -66,7 +66,7 @@ Tous les tests suivent le pattern AAA :
 [Fact]
 public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
 {
-    // Arrange - Pr�paration des donn�es
+    // Arrange - Préparation des données
     var leases = new List<Lease>
     {
  TestDataBuilder.CreateTestLease(1),
@@ -76,10 +76,10 @@ public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
     _mockUnitOfWork.Setup(x => x.LeaseRepository.GetAllAsync())
    .ReturnsAsync(leases);
 
-  // Act - Ex�cution de l'action
+  // Act - Exécution de l'action
     var result = await _leaseService.GetAllAsync();
 
-    // Assert - V�rification du r�sultat
+    // Assert - Vérification du résultat
     Assert.NotNull(result);
     Assert.Equal(2, result.Count());
 }
@@ -87,7 +87,7 @@ public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
 
 ## TestDataBuilder
 
-Classe utilitaire pour cr�er des donn�es de test coh�rentes :
+Classe utilitaire pour créer des données de test cohérentes :
 
 ```csharp
 public static class TestDataBuilder
@@ -111,17 +111,17 @@ var owner = TestDataBuilder.CreateTestOwner(5);
 var payment = TestDataBuilder.CreateTestPayment(id: 1, leaseId: 1);
 ```
 
-## Frameworks Utilis�s
+## Frameworks Utilisés
 
 ### xUnit
 - Framework de test moderne
-- Ex�cution parall�le par d�faut
-- Approche bas�e sur les [Fact] et [Theory]
+- Exécution parallèle par défaut
+- Approche basée sur les [Fact] et [Theory]
 
 ### Moq
 - Framework pour les mocks
 - Syntaxe fluide pour setup
-- V�rification des appels
+- Vérification des appels
 
 ## Conventions de Nommage des Tests
 
@@ -141,12 +141,12 @@ DeleteFail()
 
 ## Types de Tests
 
-### 1. Cas de Succ�s (Happy Path)
+### 1. Cas de Succès (Happy Path)
 ```csharp
 [Fact]
 public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
 {
-    // V�rifie le comportement normal
+    // Vérifie le comportement normal
 }
 ```
 
@@ -155,7 +155,7 @@ public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
 [Fact]
 public async Task CreateAsync_WithInvalidProperty_ShouldThrowException()
 {
-    // V�rifie la gestion des erreurs
+    // Vérifie la gestion des erreurs
 }
 ```
 
@@ -164,16 +164,16 @@ public async Task CreateAsync_WithInvalidProperty_ShouldThrowException()
 [Fact]
 public async Task GetAllAsync_WithEmptyList_ShouldReturnEmptyCollection()
 {
-    // V�rifie les cas limites
+    // Vérifie les cas limites
 }
 ```
 
-### 4. V�rification des Interactions
+### 4. Vérification des Interactions
 ```csharp
 [Fact]
 public async Task CreateAsync_ShouldSaveChanges()
 {
-    // V�rifie que SaveChanges est appel�
+    // Vérifie que SaveChanges est appelé
     _mockUnitOfWork.Verify(x => x.SaveChangesAsync(), Times.Once);
 }
 ```
@@ -181,11 +181,11 @@ public async Task CreateAsync_ShouldSaveChanges()
 ## Couverture de Test
 
 Chaque service devrait avoir :
-- ? Tests pour GetAll (avec donn�es, vide, v�rification d'appel)
-- ? Tests pour GetById (valide, invalide, v�rification d'appel)
-- ? Tests pour Create (valide, erreurs, sauvegarde)
-- ? Tests pour Update (valide, invalide, partiels)
-- ? Tests pour Delete (valide, invalide)
+- ✅ Tests pour GetAll (avec données, vide, vérification d'appel)
+- ✅ Tests pour GetById (valide, invalide, vérification d'appel)
+- ✅ Tests pour Create (valide, erreurs, sauvegarde)
+- ✅ Tests pour Update (valide, invalide, partiels)
+- ✅ Tests pour Delete (valide, invalide)
 
 ## Configuration des Mocks
 
@@ -210,7 +210,7 @@ _mockUnitOfWork.Setup(x => x.LeaseRepository.GetByIdAsync(999))
     .ReturnsAsync((Lease)null);
 ```
 
-### Setup pour les M�thodes Async
+### Setup pour les Méthodes Async
 ```csharp
 _mockUnitOfWork.Setup(x => x.SaveChangesAsync())
  .ReturnsAsync(1);
@@ -241,52 +241,56 @@ Assert.Single(collection);
 await Assert.ThrowsAsync<InvalidOperationException>(() => service.Method());
 ```
 
-## Ex�cution des Tests
+## Exécution des Tests
 
 ```bash
 # Tous les tests
 dotnet test
 
-# Tests d'un projet sp�cifique
+# Tests d'un projet spécifique
 dotnet test ProjectTest
 
 # Tests avec le pattern de nom
 dotnet test --filter "LeaseService"
 
-# Tests avec d�tails verbeux
+# Tests avec détails verbeux
 dotnet test --verbosity detailed
 
 # Tests avec couverture de code
 dotnet test /p:CollectCoverage=true
+
+dotnet clean
+  dotnet build
+  dotnet run
 ```
 
 ## Bonnes Pratiques
 
 1. **Un test = une assertion principale**
    - Peut y avoir plusieurs assertions pour contexte
-   - Mais une assertion cl�
+   - Mais une assertion clé
 
-2. **Tests ind�pendants**
-   - Pas de d�pendance entre tests
-   - Ordre d'ex�cution n'importe pas
+2. **Tests indépendants**
+   - Pas de dépendance entre tests
+   - Ordre d'exécution n'importe pas
 
 3. **Noms descriptifs**
-   - Lire le test pour comprendre ce qui est test�
+   - Lire le test pour comprendre ce qui est testé
    - Pas besoin de commentaires
 
 4. **Setup minimal**
-   - Initialiser que ce qui est n�cessaire
+   - Initialiser que ce qui est nécessaire
    - Garder les tests courts et lisibles
 
 5. **Pas de logique de test**
    - Pas de boucles ou conditions
-   - Chaque sc�nario = test distinct
+   - Chaque scénario = test distinct
 
-6. **V�rifier les interactions**
-   - `.Verify()` pour s'assurer que les m�thodes sont appel�es
+6. **Vérifier les interactions**
+   - `.Verify()` pour s'assurer que les méthodes sont appelées
    - `.Times.Once`, `.Times.Never`, `.Times.AtLeast(2)`
 
-## Cas de Test � Ajouter
+## Cas de Test à Ajouter
 
 ### Pour PaymentService
 ```
@@ -314,14 +318,14 @@ PropertyImageServiceTests
 DocumentServiceTests
 ```
 
-## Ex�cution Recommand�e
+## Exécution Recommandée
 
 1. Avant commit : `dotnet test`
-2. Avant push : V�rifier tous les tests passent
+2. Avant push : Vérifier tous les tests passent
 3. En CI/CD : Automatiser les tests
 
 ## Ressources
 
 - [xUnit Documentation](https://xunit.net/docs/getting-started/netcore)
-- [Moq Documentation](https://github.com/Moq/moq4/wiki/Quickstart)
-- [Microsoft Testing Best Practices](https://docs.microsoft.com/en-us/dotnet/core/testing/)
+  - [Moq Documentation](https://github.com/Moq/moq4/wiki/Quickstart)
+      - [Microsoft Testing Best Practices](https://docs.microsoft.com/en-us/dotnet/core/testing/)

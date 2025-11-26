@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddApplicationServices();
 
@@ -27,20 +27,20 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "LeaseManager API",
-  Version = "v1",
+        Version = "v1",
         Description = "API REST complète pour la gestion des contrats de location",
         Contact = new Microsoft.OpenApi.Models.OpenApiContact
         {
             Name = "Support",
-          Email = "support@leasemanager.com"
+            Email = "support@leasemanager.com"
         }
     });
 
-  var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     if (File.Exists(xmlPath))
     {
-      options.IncludeXmlComments(xmlPath);
+        options.IncludeXmlComments(xmlPath);
     }
 });
 
@@ -50,24 +50,24 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyOrigin()
-      .AllowAnyMethod()
-   .AllowAnyHeader();
+     .AllowAnyMethod()
+     .AllowAnyHeader();
     });
 
     options.AddPolicy("AllowLocalhost", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:4200", "https://localhost:3000", "https://localhost:4200")
-       .AllowAnyMethod()
-   .AllowAnyHeader()
-       .AllowCredentials();
+        policy.WithOrigins("http://localhost:3000", "http://localhost:4200", "https://localhost:3000", "https://localhost:4200", "http://localhost:5000", "https://localhost:5001")
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     .AllowCredentials();
     });
 
     options.AddPolicy("AllowProduction", policy =>
     {
-    policy.WithOrigins("https://yourdomain.com")
-            .AllowAnyMethod()
-   .AllowAnyHeader()
-            .AllowCredentials();
+        policy.WithOrigins("https://yourdomain.com")
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     .AllowCredentials();
     });
 });
 
@@ -82,7 +82,7 @@ builder.Services.AddApiVersioning(options =>
 {
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
-options.ReportApiVersions = true;
+    options.ReportApiVersions = true;
 });
 
 // Add Health Checks
@@ -93,13 +93,25 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
+    app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-      options.SwaggerEndpoint("/swagger/v1/swagger.json", "LeaseManager API V1");
-        options.RoutePrefix = string.Empty;
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "LeaseManager API V1");
+        // Use explicit 'swagger' prefix so swagger UI is available at /swagger
+        options.RoutePrefix = "swagger";
         options.DefaultModelsExpandDepth(1);
-      options.DefaultModelExpandDepth(1);
+        options.DefaultModelExpandDepth(1);
+    });
+
+    // Redirect root to /swagger for convenience in development
+    app.Use(async (context, next) =>
+    {
+        if (context.Request.Path == "/" || context.Request.Path == string.Empty)
+        {
+            context.Response.Redirect("/swagger");
+            return;
+        }
+        await next();
     });
 }
 

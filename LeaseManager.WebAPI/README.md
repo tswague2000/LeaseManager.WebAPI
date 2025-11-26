@@ -10,9 +10,7 @@ Une API REST complète et professionnelle pour la gestion des contrats de locatio
 - [Utilisation](#-utilisation)
 - [API Endpoints](#-api-endpoints)
 - [Tests](#-tests)
-- [Déploiement](#-déploiement)
 - [Bonnes Pratiques](#-bonnes-pratiques)
-- [Contribution](#-contribution)
 
 ## ? Caractéristiques
 
@@ -79,9 +77,8 @@ LeaseManager/
 
 - .NET 8.0 ou ultérieur
 - SQL Server 2019+
-- Docker & Docker Compose (optionnel)
 
-### Local Setup
+### Setup Local
 
 ```bash
 # 1. Cloner le repository
@@ -99,16 +96,6 @@ dotnet test
 
 # 5. Démarrer l'application
 dotnet run --project LeaseManager.WebAPI
-```
-
-### Docker Setup
-
-```bash
-# Avec docker-compose
-docker-compose up -d
-
-# L'API sera disponible sur http://localhost:5000
-# Swagger sur http://localhost:5000/
 ```
 
 ## ?? Utilisation
@@ -240,45 +227,17 @@ public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
 }
 ```
 
-## ?? Déploiement
-
-### Docker
-
-```bash
-# Build l'image
-docker build -t leasemanager-api .
-
-# Run le conteneur
-docker run -p 5000:5000 \
-  -e ConnectionStrings__DefaultConnection="..." \
-  leasemanager-api
-```
-
-### Script de Déploiement
-
-```bash
-# Rendre le script exécutable
-chmod +x deploy.sh
-
-# Exécuter le déploiement
-./deploy.sh Release
-```
-
-### CI/CD
-
-Utiliser `deploy.sh` pour automatiser :
-1. Restauration des dépendances
-2. Nettoyage des builds
-3. Compilation
-4. Tests
-5. Publication
-
 ## ?? Bonnes Pratiques
 
 ### CORS
 Configuration multi-environnement :
 - Development : localhost:3000, localhost:4200
 - Production : domaine configurable
+
+### API Versioning
+- Route : `/api/v1/[controller]`
+- Version par défaut : 1.0
+- Reporting dans headers
 
 ### Response Format
 ```json
@@ -294,7 +253,7 @@ Configuration multi-environnement :
 ```json
 {
   "statusCode": 400,
-"message": "Opération invalide",
+  "message": "Opération invalide",
   "details": "Détail de l'erreur",
   "timestamp": "2024-01-10T10:30:00Z"
 }
@@ -306,10 +265,13 @@ _logger.LogInformation("Récupération de tous les baux");
 _logger.LogError(ex, "Erreur lors de la récupération");
 ```
 
-### API Versioning
-- Route : `/api/v1/[controller]`
-- Version par défaut : 1.0
-- Reporting dans headers
+### Codes HTTP Appropriés
+- 200 OK
+- 201 Created
+- 204 No Content
+- 400 Bad Request
+- 404 Not Found
+- 500 Internal Server Error
 
 ## ?? Configuration
 
@@ -331,16 +293,6 @@ _logger.LogError(ex, "Erreur lors de la récupération");
 - **Development** : CORS permissif, Swagger activé
 - **Production** : CORS restrictif, Swagger désactivé
 
-## ?? Statistiques
-
-| Métrique | Nombre |
-|----------|--------|
-| Services | 8 |
-| Contrôleurs | 8 |
-| Tests Unitaires | 20+ |
-| Endpoints | 55+ |
-| Codes HTTP Gérés | 7 |
-
 ## ?? Sécurité
 
 ### Implémentée
@@ -356,20 +308,21 @@ _logger.LogError(ex, "Erreur lors de la récupération");
 - [ ] Rate limiting
 - [ ] Input sanitization
 
+## ?? Statistiques
+
+| Métrique | Nombre |
+|----------|--------|
+| Services | 8 |
+| Contrôleurs | 8 |
+| Tests Unitaires | 20+ |
+| Endpoints | 55+ |
+| Codes HTTP Gérés | 7 |
+
 ## ?? Documentation
 
-- [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md) - Résumé
 - [BEST_PRACTICES_REST_API.md](./BEST_PRACTICES_REST_API.md) - Bonnes pratiques
 - [TESTS_ORGANIZATION.md](./ProjectTest/TESTS_ORGANIZATION.md) - Organisation tests
 - [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) - Résumé final
-
-## ?? Contribution
-
-1. Fork le repository
-2. Créer une branche (`git checkout -b feature/amazing-feature`)
-3. Commit les changements (`git commit -m 'Add amazing feature'`)
-4. Push vers la branche (`git push origin feature/amazing-feature`)
-5. Ouvrir une Pull Request
 
 ## ?? Support
 
@@ -380,14 +333,6 @@ Pour les questions ou problèmes :
 ## ?? Licence
 
 Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## ?? Remerciements
-
-Construit avec :
-- .NET 8
-- xUnit & Moq pour les tests
-- Swagger/OpenAPI pour la documentation
-- SQL Server pour la base de données
 
 ---
 

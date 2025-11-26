@@ -12,10 +12,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", policy =>
     {
-      policy.WithOrigins("http://localhost:3000", "http://localhost:4200")
-            .AllowAnyMethod()
-          .AllowAnyHeader()
- .AllowCredentials();
+        policy.WithOrigins("http://localhost:3000", "http://localhost:4200")
+      .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
     });
 });
 ```
@@ -86,7 +86,7 @@ _logger.LogError(ex, "Erreur lors de la récupération");
 
 ## 8. Health Checks
 ? Point d'accès pour monitoring :
-- `/api/health` - Vérifie la connexion DB
+- `/api/health` - Vérifie la santé de l'application
 - Utile pour les load balancers
 
 ## 9. Codes HTTP Appropriés
@@ -102,8 +102,8 @@ _logger.LogError(ex, "Erreur lors de la récupération");
 ? Contrôles stricts :
 ```csharp
 if (id <= 0)
-return BadRequest(ApiResponse<LeaseReadDto>
-        .ErrorResponse("L'ID doit être supérieur à 0"));
+    return BadRequest(ApiResponse<LeaseReadDto>
+    .ErrorResponse("L'ID doit être supérieur à 0"));
 ```
 
 ## 11. Annotations Swagger
@@ -201,13 +201,10 @@ dotnet run
 # http://localhost:5000/api/health
 ```
 
-## Variables d'Environnement
+## Configuration par Environnement
 
-Créer un fichier `.env` :
-```
-ASPNETCORE_ENVIRONMENT=Development
-ConnectionStrings__DefaultConnection=Server=...
-```
+- **Development** : CORS permissif, Swagger activé
+- **Production** : CORS restrictif, Swagger désactivé
 
 ## Points de Monitoring
 
@@ -216,11 +213,19 @@ ConnectionStrings__DefaultConnection=Server=...
 - Swagger UI pour tester
 - Réponses standardisées pour client
 
+## Sécurité Implémentée
+
+- [x] CORS configurable
+- [x] HTTPS enforced
+- [x] Exception handling robuste
+- [x] Input validation
+- [x] Logging centralisé
+
 ## Sécurité Supplémentaire (À faire)
 
-- [ ] Rate limiting
 - [ ] JWT Authentication
+- [ ] Rate limiting
 - [ ] API Key validation
 - [ ] Input sanitization
-- [ ] HTTPS enforcement
 - [ ] HTTPS-only cookies
+- [ ] CSRF protection

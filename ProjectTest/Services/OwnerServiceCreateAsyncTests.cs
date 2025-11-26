@@ -11,85 +11,85 @@ namespace ProjectTest.Services
     public class OwnerServiceCreateAsyncTests
     {
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
-       private readonly IOwnerService _ownerService;
+        private readonly IOwnerService _ownerService;
 
-    public OwnerServiceCreateAsyncTests()
+        public OwnerServiceCreateAsyncTests()
         {
-   _mockUnitOfWork = new Mock<IUnitOfWork>();
-    _ownerService = new OwnerService(_mockUnitOfWork.Object);
- }
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _ownerService = new OwnerService(_mockUnitOfWork.Object);
+        }
 
-  [Fact]
+        [Fact]
         public async Task CreateAsync_WithValidData_ShouldCreateOwner()
-     {
-  // Arrange
- var createDto = new OwnerCreateDto
-      {
-FullName = "John Smith",
-       Email = "john.smith@example.com",
-        PhoneNumber = "555-0100"
-     };
-
-  _mockUnitOfWork.Setup(x => x.OwnerRepository.OwnerExistsByEmailAsync("john.smith@example.com"))
-       .ReturnsAsync(false);
-
-_mockUnitOfWork.Setup(x => x.OwnerRepository.AddAsync(It.IsAny<Owner>()))
-        .Returns(Task.CompletedTask);
-
-    _mockUnitOfWork.Setup(x => x.SaveChangesAsync())
- .ReturnsAsync(1);
-
-    // Act
- var result = await _ownerService.CreateAsync(createDto);
-
-      // Assert
- Assert.NotNull(result);
-   Assert.Equal("John Smith", result.FullName);
-     }
-
-[Fact]
-     public async Task CreateAsync_WithDuplicateEmail_ShouldThrowException()
         {
-         // Arrange
-  var createDto = new OwnerCreateDto
-   {
-FullName = "Jane Doe",
-    Email = "existing@example.com",
-    PhoneNumber = "555-0200"
-    };
+            // Arrange
+            var createDto = new OwnerCreateDto
+            {
+                FullName = "John Smith",
+                Email = "john.smith@example.com",
+                PhoneNumber = "555-0100"
+            };
 
-       _mockUnitOfWork.Setup(x => x.OwnerRepository.OwnerExistsByEmailAsync("existing@example.com"))
-      .ReturnsAsync(true);
+            _mockUnitOfWork.Setup(x => x.OwnerRepository.OwnerExistsByEmailAsync("john.smith@example.com"))
+                 .ReturnsAsync(false);
 
-  // Act & Assert
-  await Assert.ThrowsAsync<InvalidOperationException>(() => _ownerService.CreateAsync(createDto));
-    }
+            _mockUnitOfWork.Setup(x => x.OwnerRepository.AddAsync(It.IsAny<Owner>()))
+                    .Returns(Task.CompletedTask);
 
-     [Fact]
-       public async Task CreateAsync_ShouldSaveChanges()
-     {
-      // Arrange
-   var createDto = new OwnerCreateDto
-    {
-     FullName = "Bob Johnson",
-        Email = "bob@example.com",
-      PhoneNumber = "555-0300"
-     };
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync())
+         .ReturnsAsync(1);
 
-      _mockUnitOfWork.Setup(x => x.OwnerRepository.OwnerExistsByEmailAsync("bob@example.com"))
-      .ReturnsAsync(false);
+            // Act
+            var result = await _ownerService.CreateAsync(createDto);
 
-    _mockUnitOfWork.Setup(x => x.OwnerRepository.AddAsync(It.IsAny<Owner>()))
-     .Returns(Task.CompletedTask);
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal("John Smith", result.FullName);
+        }
 
-_mockUnitOfWork.Setup(x => x.SaveChangesAsync())
-      .ReturnsAsync(1);
+        [Fact]
+        public async Task CreateAsync_WithDuplicateEmail_ShouldThrowException()
+        {
+            // Arrange
+            var createDto = new OwnerCreateDto
+            {
+                FullName = "Jane Doe",
+                Email = "existing@example.com",
+                PhoneNumber = "555-0200"
+            };
 
-    // Act
-  await _ownerService.CreateAsync(createDto);
+            _mockUnitOfWork.Setup(x => x.OwnerRepository.OwnerExistsByEmailAsync("existing@example.com"))
+           .ReturnsAsync(true);
 
-    // Assert
-      _mockUnitOfWork.Verify(x => x.SaveChangesAsync(), Times.Once);
-     }
+            // Act & Assert
+            await Assert.ThrowsAsync<InvalidOperationException>(() => _ownerService.CreateAsync(createDto));
+        }
+
+        [Fact]
+        public async Task CreateAsync_ShouldSaveChanges()
+        {
+            // Arrange
+            var createDto = new OwnerCreateDto
+            {
+                FullName = "Bob Johnson",
+                Email = "bob@example.com",
+                PhoneNumber = "555-0300"
+            };
+
+            _mockUnitOfWork.Setup(x => x.OwnerRepository.OwnerExistsByEmailAsync("bob@example.com"))
+            .ReturnsAsync(false);
+
+            _mockUnitOfWork.Setup(x => x.OwnerRepository.AddAsync(It.IsAny<Owner>()))
+             .Returns(Task.CompletedTask);
+
+            _mockUnitOfWork.Setup(x => x.SaveChangesAsync())
+                  .ReturnsAsync(1);
+
+            // Act
+            await _ownerService.CreateAsync(createDto);
+
+            // Assert
+            _mockUnitOfWork.Verify(x => x.SaveChangesAsync(), Times.Once);
+        }
     }
 }
