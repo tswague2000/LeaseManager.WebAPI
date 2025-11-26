@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="../LeaseManager.Core.Domain/LeaseManager.Core.Domain.csproj" />
   <Project Path="../LeaseManager.Infrastucture/LeaseManager.Infrastucture.csproj" />
+  <Project Path="../ProjectTest/ProjectTest.csproj" Id="03b3150f-14e7-483b-b564-6d83b75b1565" />
   <Project Path="LeaseManager.WebAPI.csproj" />
 </Solution>
