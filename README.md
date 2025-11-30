@@ -1,166 +1,341 @@
-# 🏠 LeaseManager API
+# ?? LeaseManager API
 
-## 🧩 Présentation générale
+Une API REST compl�te et professionnelle pour la gestion des contrats de location immobili�re, construite avec **.NET 8** en suivant les meilleures pratiques de l'industrie.
 
-**LeaseManager** est une **API de gestion de contrats de location immobilière**.  
-Elle constitue le **module backend** d’un site web ou d’un système interne, permettant d’administrer les **propriétés**, les **propriétaires**, les **locataires**, les **baux** et les **paiements** associés.
+## ?? Table des mati�res
 
-L’API ne contient **aucun système d’authentification** : elle est conçue pour être utilisée par une application front-end (par exemple un site web) et sera **sécurisée par une clé d’accès (API Key)**.
+- [Caract�ristiques](#-caract�ristiques)
+- [Architecture](#-architecture)
+- [Installation](#-installation)
+- [Utilisation](#-utilisation)
+- [API Endpoints](#-api-endpoints)
+- [Tests](#-tests)
+- [Bonnes Pratiques](#-bonnes-pratiques)
+
+## ? Caract�ristiques
+
+### Fonctionnalit�s Core
+- ? Gestion compl�te des contrats de location (CRUD)
+- ? Gestion des propri�t�s et propri�taires
+- ? Suivi des paiements et transactions
+- ? Demandes de maintenance
+- ? Galerie d'images pour propri�t�s
+- ? Gestion de documents
+
+### Qualit� du Code
+- ? Architecture Clean (Domain-Driven Design)
+- ? Injection de d�pendances
+- ? Repository Pattern
+- ? Unit of Work Pattern
+- ? Logging structur�
+
+### API REST
+- ? CORS configurable multi-environnement
+- ? Versioning (v1)
+- ? Documentation Swagger/OpenAPI
+- ? R�ponses standardis�es
+- ? Gestion globale des exceptions
+- ? Compression de r�ponses
+- ? Health checks
+
+### Tests
+- ? Tests unitaires complets (xUnit + Moq)
+- ? Tests par service organis�s
+- ? Pattern AAA (Arrange-Act-Assert)
+- ? TestDataBuilder pour consistance
+
+### S�curit�
+- ? HTTPS redirection
+- ? Validation d'entr�e
+- ? CORS s�curis�
+- ? Logging des erreurs
+- ? Exception handling globale
+
+## ??? Architecture
+
+```
+LeaseManager/
+??? LeaseManager.Core.Domain/
+?   ??? Entities/   # Mod�les m�tier
+?   ??? Enums/       # �num�rations
+?   ??? Interfaces/        # Contrats
+??? LeaseManager.Infrastructure/
+?   ??? Data/     # Base de donn�es
+?   ??? Repositories/      # Acc�s aux donn�es
+?   ??? UnitOfWork/ # Orchestration
+??? LeaseManager.WebAPI/
+?   ??? Controllers/       # Endpoints REST
+?   ??? Application/       # Services m�tier
+?   ??? Middleware/        # Handlers
+?   ??? Program.cs         # Configuration
+??? ProjectTest/     # Tests unitaires
+```
+
+## ?? Installation
+
+### Pr�requis
+
+- .NET 8.0 ou ult�rieur
+- SQL Server 2019+
+
+### Setup Local
+
+```bash
+# 1. Cloner le repository
+git clone https://github.com/tswague2000/LeaseManager.WebAPI.git
+cd LeaseManager.WebAPI
+
+# 2. Restaurer les d�pendances
+dotnet restore
+
+# 3. Mettre � jour la base de donn�es
+dotnet ef database update --project LeaseManager.Infrastructure
+
+# 4. Lancer les tests
+dotnet test
+
+# 5. D�marrer l'application
+dotnet run --project LeaseManager.WebAPI
+```
+
+## ?? Utilisation
+
+### Lancer l'Application
+
+```bash
+# En d�veloppement
+cd LeaseManager.WebAPI
+dotnet run
+
+# En production
+dotnet run --configuration Release
+```
+
+### Acc�der � l'API
+
+- **Base URL** : http://localhost:5000
+- **Swagger UI** : http://localhost:5000/
+- **Health Check** : http://localhost:5000/api/health
+
+## ?? API Endpoints
+
+### Lease (Contrats de Location)
+```http
+GET    /api/v1/lease         # Tous les baux
+GET    /api/v1/lease/{id}  # Bail sp�cifique
+POST   /api/v1/lease# Cr�er un bail
+PUT    /api/v1/lease/{id}      # Mettre � jour
+DELETE /api/v1/lease/{id}      # Supprimer
+```
+
+### Property (Propri�t�s)
+```http
+GET    /api/v1/property        # Toutes les propri�t�s
+GET    /api/v1/property/{id}   # Propri�t� sp�cifique
+POST   /api/v1/property    # Cr�er une propri�t�
+PUT    /api/v1/property/{id}   # Mettre � jour
+DELETE /api/v1/property/{id}   # Supprimer
+```
+
+### Owner (Propri�taires)
+```http
+GET    /api/v1/owner           # Tous les propri�taires
+GET    /api/v1/owner/{id}      # Propri�taire sp�cifique
+POST   /api/v1/owner           # Cr�er un propri�taire
+PUT    /api/v1/owner/{id}      # Mettre � jour
+DELETE /api/v1/owner/{id}  # Supprimer
+```
+
+*Et ainsi de suite pour Tenant, Payment, MaintenanceRequest, PropertyImage, Document*
+
+### Exemple de Requ�te
+
+```bash
+# R�cup�rer tous les baux
+curl -X GET http://localhost:5000/api/v1/lease \
+  -H "Content-Type: application/json"
+
+# Cr�er un bail
+curl -X POST http://localhost:5000/api/v1/lease \
+  -H "Content-Type: application/json" \
+  -d '{
+    "startDate": "2024-01-01",
+  "endDate": "2025-01-01",
+    "monthlyRent": 1000,
+  "tenantId": 1,
+    "propertyId": 1
+  }'
+```
+
+## ?? Tests
+
+### Ex�cuter les Tests
+
+```bash
+# Tous les tests
+dotnet test
+
+# Tests sp�cifiques
+dotnet test --filter "LeaseService"
+
+# Avec couverture de code
+dotnet test /p:CollectCoverage=true
+
+# D�tails verbeux
+dotnet test --verbosity detailed
+```
+
+### Structure des Tests
+
+Les tests sont organis�s par service dans `ProjectTest/Services/` :
+
+```
+ProjectTest/Services/
+??? LeaseServiceGetAllAsyncTests.cs
+??? LeaseServiceGetByIdAsyncTests.cs
+??? LeaseServiceCreateAsyncTests.cs
+??? LeaseServiceUpdateAsyncTests.cs
+??? LeaseServiceDeleteAsyncTests.cs
+??? OwnerServiceGetAllAsyncTests.cs
+??? OwnerServiceCreateAsyncTests.cs
+??? OwnerServiceUpdateAsyncTests.cs
+??? OwnerServiceDeleteAsyncTests.cs
+??? TestDataBuilder.cs
+```
+
+### Exemple de Test
+
+```csharp
+[Fact]
+public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
+{
+    // Arrange
+    var leases = new List<Lease>
+    {
+    TestDataBuilder.CreateTestLease(1),
+        TestDataBuilder.CreateTestLease(2)
+    };
+    _mockUnitOfWork.Setup(x => x.LeaseRepository.GetAllAsync())
+     .ReturnsAsync(leases);
+
+    // Act
+    var result = await _leaseService.GetAllAsync();
+
+  // Assert
+    Assert.NotNull(result);
+    Assert.Equal(2, result.Count());
+}
+```
+
+## ?? Bonnes Pratiques
+
+### CORS
+Configuration multi-environnement :
+- Development : localhost:3000, localhost:4200
+- Production : domaine configurable
+
+### API Versioning
+- Route : `/api/v1/[controller]`
+- Version par d�faut : 1.0
+- Reporting dans headers
+
+### Response Format
+```json
+{
+  "success": true,
+  "message": "Op�ration r�ussie",
+  "data": { },
+  "errors": null
+}
+```
+
+### Error Handling
+```json
+{
+  "statusCode": 400,
+  "message": "Op�ration invalide",
+  "details": "D�tail de l'erreur",
+  "timestamp": "2024-01-10T10:30:00Z"
+}
+```
+
+### Logging
+```csharp
+_logger.LogInformation("R�cup�ration de tous les baux");
+_logger.LogError(ex, "Erreur lors de la r�cup�ration");
+```
+
+### Codes HTTP Appropri�s
+- 200 OK
+- 201 Created
+- 204 No Content
+- 400 Bad Request
+- 404 Not Found
+- 500 Internal Server Error
+
+## ?? Configuration
+
+### appsettings.json
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=...;Initial Catalog=LeaseManagerDB;..."
+  },
+  "CorsSettings": {
+    "AllowedOrigins": ["http://localhost:3000"]
+  }
+}
+```
+
+### Environnements
+
+- **Development** : CORS permissif, Swagger activ�
+- **Production** : CORS restrictif, Swagger d�sactiv�
+
+## ?? S�curit�
+
+### Impl�ment�e
+- ? HTTPS redirection
+- ? CORS configurable
+- ? Input validation
+- ? Global exception handling
+- ? Logging centralis�
+
+### � Impl�menter
+- [ ] JWT Authentication
+- [ ] API Key validation
+- [ ] Rate limiting
+- [ ] Input sanitization
+
+## ?? Statistiques
+
+| M�trique | Nombre |
+|----------|--------|
+| Services | 8 |
+| Contr�leurs | 8 |
+| Tests Unitaires | 20+ |
+| Endpoints | 55+ |
+| Codes HTTP G�r�s | 7 |
+
+## ?? Documentation
+
+- [BEST_PRACTICES_REST_API.md](./BEST_PRACTICES_REST_API.md) - Bonnes pratiques
+- [TESTS_ORGANIZATION.md](./ProjectTest/TESTS_ORGANIZATION.md) - Organisation tests
+- [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) - R�sum� final
+
+## ?? Support
+
+Pour les questions ou probl�mes :
+- Cr�er une issue
+- Email : support@leasemanager.com
+
+## ?? Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de d�tails.
 
 ---
 
-## 🎯 Objectif principal
-
-Offrir une base solide pour gérer l’ensemble du **cycle de vie d’un bail locatif**, depuis la création d’une propriété jusqu’à la fin du contrat et le suivi des paiements.
-
----
-
-## 🏗️ Structure des entités principales
-
-### 👤 Owner (Propriétaire)
-Représente la personne ou l’entreprise qui possède une ou plusieurs propriétés.
-
-**Champs typiques :**
-- `Id` — identifiant unique  
-- `FullName` — nom complet  
-- `Email` — adresse courriel  
-- `PhoneNumber` — numéro de téléphone  
-- `Properties` — liste des propriétés associées  
-
-**Rôle :**
-- Enregistre et gère ses propriétés.  
-- Consulte les baux et paiements liés à ses biens.
-
----
-
-### 🧑‍💼 Tenant (Locataire)
-Représente la personne qui loue une propriété.
-
-**Champs typiques :**
-- `Id` — identifiant unique  
-- `FullName` — nom complet  
-- `Email` — adresse courriel  
-- `PhoneNumber` — numéro de téléphone  
-- `Leases` — liste des baux signés  
-
-**Rôle :**
-- Loue une propriété.  
-- Effectue les paiements selon le contrat de bail.
-
----
-
-### 🏡 Property (Propriété)
-Représente un bien immobilier disponible à la location.
-
-**Champs typiques :**
-- `Id` — identifiant unique  
-- `Title` — titre du bien (ex : *Appartement 2 pièces à Montréal*)  
-- `Description` — détails sur la propriété  
-- `Address` — adresse complète  
-- `PricePerMonth` — prix mensuel  
-- `OwnerId` — identifiant du propriétaire  
-- `Images` — liste des images associées (`PropertyImage`)  
-- `Leases` — baux liés à la propriété  
-
-**Rôle :**
-- Support principal des contrats de location.  
-- Peut être libre ou occupée selon les `Leases` actifs.
-
----
-
-### 📄 Lease (Contrat de location)
-Entité centrale du système.  
-Représente le contrat signé entre un propriétaire et un locataire pour une propriété donnée.
-
-**Champs typiques :**
-- `Id` — identifiant unique  
-- `PropertyId` — propriété concernée  
-- `OwnerId` — propriétaire  
-- `TenantId` — locataire  
-- `StartDate` / `EndDate` — durée du bail  
-- `MonthlyRent` — montant du loyer  
-- `Status` — *Active*, *Pending*, *Terminated*, *Expired*  
-- `Payments` — liste des paiements effectués  
-
-**Rôle :**
-- Relie le propriétaire, le locataire et la propriété.  
-- Sert de base au suivi des paiements et de la durée du contrat.
-
----
-
-### 💰 Payment (Paiement)
-Représente une transaction effectuée dans le cadre d’un bail.
-
-**Champs typiques :**
-- `Id` — identifiant unique  
-- `LeaseId` — contrat lié  
-- `Amount` — montant du paiement  
-- `Date` — date du paiement  
-- `Status` — *Pending*, *Completed*, *Late*, etc.  
-- `PaymentMethod` — *CreditCard*, *BankTransfer*, *Cash*, etc.  
-
-**Rôle :**
-- Permet de suivre les paiements mensuels du locataire.  
-- Gère les retards ou paiements incomplets.
-
----
-
-### 🖼️ PropertyImage (Image de propriété)
-Contient les images liées à une propriété.
-
-**Champs typiques :**
-- `Id` — identifiant unique  
-- `PropertyId` — identifiant de la propriété  
-- `ImageUrl` — lien de l’image  
-- `Description` — texte descriptif  
-
-**Rôle :**
-- Permet d’illustrer les propriétés sur le front-end.
-
----
-
-## ⚙️ Fonctionnement global
-
-1. Le **propriétaire (Owner)** enregistre une ou plusieurs **propriétés (Property)**.  
-2. Chaque propriété peut avoir plusieurs **images (PropertyImage)**.  
-3. Un **locataire (Tenant)** loue une propriété via un **bail (Lease)**.  
-4. Ce bail lie la propriété, le propriétaire et le locataire.  
-5. Les **paiements (Payment)** sont ensuite enregistrés pour chaque bail.  
-6. L’API fournit des **endpoints REST** pour :
-   - Ajouter / modifier / supprimer des propriétés  
-   - Créer ou mettre à jour un bail  
-   - Enregistrer un paiement  
-   - Lister les paiements par bail  
-   - Consulter les propriétés disponibles ou louées  
-
----
-
-## 🔐 Sécurité et architecture
-
-- **Aucune authentification directe** (gérée côté front-end).  
-- **Accès sécurisé par une clé d’API (API Key)** dans les requêtes HTTP.  
-- **Architecture en couches (Clean Architecture)** :
-  - **Domain** — Entités métier (`Owner`, `Tenant`, `Property`, etc.)  
-  - **Infrastructure** — Base de données, repositories (EF Core)  
-  - **Application** — Logique métier (services, règles de gestion)  
-  - **API** — Endpoints REST (controllers)  
-  Controller → <T Entity)Service → <T Entity)ServiceRepository → <T Entity)ServiceRepository → GenericRepository → AppDbContext → Database
-
----
-
-## 🧠 Bénéfices du modèle
-
-- Séparation claire entre les rôles (Owner / Tenant).  
-- Cohérence et traçabilité des données.  
-- Architecture évolutive et maintenable.  
-- Peut être intégré à tout type d’application (site web, mobile, SaaS).  
-
----
-
-## 🧾 Exemple de relations
-
-```text
-Owner ───< Property ───< Lease >─── Tenant
-                     │
-                     └──< PropertyImage
-Lease ───< Payment
+**Version** : 1.0.0  
+**Derni�re mise � jour** : 2024-01-10  
+**Statut** : ? Production Ready

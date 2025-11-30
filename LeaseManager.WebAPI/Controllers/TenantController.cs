@@ -6,51 +6,51 @@ namespace LeaseManager.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-  public class TenantController : ControllerBase
+    public class TenantController : ControllerBase
     {
-    private readonly ITenantService _tenantService;
+        private readonly ITenantService _tenantService;
 
-   public TenantController(ITenantService tenantService)
+        public TenantController(ITenantService tenantService)
         {
             _tenantService = tenantService;
         }
 
-     [HttpGet]
-  public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-     var tenants = await _tenantService.GetAllAsync();
-     return Ok(tenants);
+            var tenants = await _tenantService.GetAllAsync();
+            return Ok(tenants);
         }
 
-  [HttpGet("{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
-  {
-   var tenant = await _tenantService.GetByIdAsync(id);
-        if (tenant == null) return NotFound();
-     return Ok(tenant);
+        {
+            var tenant = await _tenantService.GetByIdAsync(id);
+            if (tenant == null) return NotFound();
+            return Ok(tenant);
         }
 
         [HttpPost]
- public async Task<IActionResult> Create([FromBody] TenantCreateDto dto)
-    {
+        public async Task<IActionResult> Create([FromBody] TenantCreateDto dto)
+        {
             var tenant = await _tenantService.CreateAsync(dto);
-    return CreatedAtAction(nameof(GetById), new { id = tenant.Id }, tenant);
+            return CreatedAtAction(nameof(GetById), new { id = tenant.Id }, tenant);
         }
 
-[HttpPut("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] TenantUpdateDto dto)
-     {
-   var success = await _tenantService.UpdateAsync(id, dto);
-    if (!success) return NotFound();
-  return NoContent();
+        {
+            var success = await _tenantService.UpdateAsync(id, dto);
+            if (!success) return NotFound();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-      var success = await _tenantService.DeleteAsync(id);
-  if (!success) return NotFound();
-     return NoContent();
+            var success = await _tenantService.DeleteAsync(id);
+            if (!success) return NotFound();
+            return NoContent();
         }
     }
 }

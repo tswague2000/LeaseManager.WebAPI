@@ -17,40 +17,40 @@ namespace LeaseManager.WebAPI.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-      {
-         var payments = await _paymentService.GetAllAsync();
-   return Ok(payments);
- }
+        {
+            var payments = await _paymentService.GetAllAsync();
+            return Ok(payments);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
-  {
-        var payment = await _paymentService.GetByIdAsync(id);
-      if (payment == null) return NotFound();
+        {
+            var payment = await _paymentService.GetByIdAsync(id);
+            if (payment == null) return NotFound();
             return Ok(payment);
-     }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(PaymentCreateDto dto)
         {
-    var payment = await _paymentService.CreateAsync(dto);
-    return CreatedAtAction(nameof(GetById), new { id = payment.Id }, payment);
+            var payment = await _paymentService.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = payment.Id }, payment);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, PaymentUpdateDto dto)
-      {
-       var success = await _paymentService.UpdateAsync(id, dto);
-   if (!success) return NotFound();
+        {
+            var success = await _paymentService.UpdateAsync(id, dto);
+            if (!success) return NotFound();
             return NoContent();
         }
 
-      [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-  var success = await _paymentService.DeleteAsync(id);
-    if (!success) return NotFound();
-          return NoContent();
-}
+            var success = await _paymentService.DeleteAsync(id);
+            if (!success) return NotFound();
+            return NoContent();
+        }
     }
 }

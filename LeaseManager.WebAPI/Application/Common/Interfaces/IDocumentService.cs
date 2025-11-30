@@ -7,6 +7,6 @@ namespace LeaseManager.WebAPI.Application.Common.Interfaces
         Task<IEnumerable<DocumentReadDto>> GetAllAsync();
         Task<DocumentReadDto?> GetByIdAsync(int id);
         Task<DocumentReadDto> CreateAsync(DocumentCreateDto dto);
-  Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }
