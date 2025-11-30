@@ -1,10 +1,10 @@
-# ?? LeaseManager API
+#    LeaseManager API
 
-Une API REST complète et professionnelle pour la gestion des contrats de location immobilière, construite avec **.NET 8** en suivant les meilleures pratiques de l'industrie.
+Une API REST complï¿½te et professionnelle pour la gestion des contrats de location immobiliï¿½re, construite avec **.NET 8** en suivant les meilleures pratiques de l'industrie.
 
-## ?? Table des matières
+##    Table des matiï¿½res
 
-- [Caractéristiques](#-caractéristiques)
+- [Caractï¿½ristiques](#-caractï¿½ristiques)
 - [Architecture](#-architecture)
 - [Installation](#-installation)
 - [Utilisation](#-utilisation)
@@ -12,70 +12,70 @@ Une API REST complète et professionnelle pour la gestion des contrats de locatio
 - [Tests](#-tests)
 - [Bonnes Pratiques](#-bonnes-pratiques)
 
-## ? Caractéristiques
+##   Caractï¿½ristiques
 
-### Fonctionnalités Core
-- ? Gestion complète des contrats de location (CRUD)
-- ? Gestion des propriétés et propriétaires
-- ? Suivi des paiements et transactions
-- ? Demandes de maintenance
-- ? Galerie d'images pour propriétés
-- ? Gestion de documents
+### Fonctionnalitï¿½s Core
+-   Gestion complï¿½te des contrats de location (CRUD)
+-   Gestion des propriï¿½tï¿½s et propriï¿½taires
+-   Suivi des paiements et transactions
+-   Demandes de maintenance
+-   Galerie d'images pour propriï¿½tï¿½s
+-   Gestion de documents
 
-### Qualité du Code
-- ? Architecture Clean (Domain-Driven Design)
-- ? Injection de dépendances
-- ? Repository Pattern
-- ? Unit of Work Pattern
-- ? Logging structuré
+### Qualitï¿½ du Code
+-   Architecture Clean (Domain-Driven Design)
+-   Injection de dï¿½pendances
+-   Repository Pattern
+-   Unit of Work Pattern
+-   Logging structurï¿½
 
 ### API REST
-- ? CORS configurable multi-environnement
-- ? Versioning (v1)
-- ? Documentation Swagger/OpenAPI
-- ? Réponses standardisées
-- ? Gestion globale des exceptions
-- ? Compression de réponses
-- ? Health checks
+-   CORS configurable multi-environnement
+-   Versioning (v1)
+-   Documentation Swagger/OpenAPI
+-   Rï¿½ponses standardisï¿½es
+-   Gestion globale des exceptions
+-   Compression de rï¿½ponses
+-   Health checks
 
 ### Tests
-- ? Tests unitaires complets (xUnit + Moq)
-- ? Tests par service organisés
-- ? Pattern AAA (Arrange-Act-Assert)
-- ? TestDataBuilder pour consistance
+-   Tests unitaires complets (xUnit + Moq)
+-   Tests par service organisï¿½s
+-   Pattern AAA (Arrange-Act-Assert)
+-   TestDataBuilder pour consistance
 
-### Sécurité
-- ? HTTPS redirection
-- ? Validation d'entrée
-- ? CORS sécurisé
-- ? Logging des erreurs
-- ? Exception handling globale
+### Sï¿½curitï¿½
+-   HTTPS redirection
+-   Validation d'entrï¿½e
+-   CORS sï¿½curisï¿½
+-   Logging des erreurs
+-   Exception handling globale
 
-## ??? Architecture
+##  Architecture
 
 ```
 LeaseManager/
-??? LeaseManager.Core.Domain/
-?   ??? Entities/   # Modèles métier
-?   ??? Enums/       # Énumérations
-?   ??? Interfaces/        # Contrats
-??? LeaseManager.Infrastructure/
-?   ??? Data/     # Base de données
-?   ??? Repositories/      # Accès aux données
-?   ??? UnitOfWork/ # Orchestration
-??? LeaseManager.WebAPI/
-?   ??? Controllers/       # Endpoints REST
-?   ??? Application/       # Services métier
-?   ??? Middleware/        # Handlers
-?   ??? Program.cs         # Configuration
-??? ProjectTest/     # Tests unitaires
+ LeaseManager.Core.Domain/
+     Entities/   # Modï¿½les mï¿½tier
+     Enums/       # ï¿½numï¿½rations
+     Interfaces/        # Contrats
+ LeaseManager.Infrastructure/
+     Data/     # Base de donnï¿½es
+     Repositories/      # Accï¿½s aux donnï¿½es
+     UnitOfWork/ # Orchestration
+ LeaseManager.WebAPI/
+     Controllers/       # Endpoints REST
+     Application/       # Services mï¿½tier
+     Middleware/        # Handlers
+     Program.cs         # Configuration
+ ProjectTest/     # Tests unitaires
 ```
 
-## ?? Installation
+##    Installation
 
-### Prérequis
+### Prï¿½requis
 
-- .NET 8.0 ou ultérieur
+- .NET 8.0 ou ultï¿½rieur
 - SQL Server 2019+
 
 ### Setup Local
@@ -85,25 +85,25 @@ LeaseManager/
 git clone https://github.com/tswague2000/LeaseManager.WebAPI.git
 cd LeaseManager.WebAPI
 
-# 2. Restaurer les dépendances
+# 2. Restaurer les dï¿½pendances
 dotnet restore
 
-# 3. Mettre à jour la base de données
+# 3. Mettre ï¿½ jour la base de donnï¿½es
 dotnet ef database update --project LeaseManager.Infrastructure
 
 # 4. Lancer les tests
 dotnet test
 
-# 5. Démarrer l'application
+# 5. Dï¿½marrer l'application
 dotnet run --project LeaseManager.WebAPI
 ```
 
-## ?? Utilisation
+##    Utilisation
 
 ### Lancer l'Application
 
 ```bash
-# En développement
+# En dï¿½veloppement
 cd LeaseManager.WebAPI
 dotnet run
 
@@ -111,51 +111,51 @@ dotnet run
 dotnet run --configuration Release
 ```
 
-### Accéder à l'API
+### Accï¿½der ï¿½ l'API
 
 - **Base URL** : http://localhost:5000
 - **Swagger UI** : http://localhost:5000/
 - **Health Check** : http://localhost:5000/api/health
 
-## ?? API Endpoints
+##    API Endpoints
 
 ### Lease (Contrats de Location)
 ```http
 GET    /api/v1/lease         # Tous les baux
-GET    /api/v1/lease/{id}  # Bail spécifique
-POST   /api/v1/lease# Créer un bail
-PUT    /api/v1/lease/{id}      # Mettre à jour
+GET    /api/v1/lease/{id}  # Bail spï¿½cifique
+POST   /api/v1/lease# Crï¿½er un bail
+PUT    /api/v1/lease/{id}      # Mettre ï¿½ jour
 DELETE /api/v1/lease/{id}      # Supprimer
 ```
 
-### Property (Propriétés)
+### Property (Propriï¿½tï¿½s)
 ```http
-GET    /api/v1/property        # Toutes les propriétés
-GET    /api/v1/property/{id}   # Propriété spécifique
-POST   /api/v1/property    # Créer une propriété
-PUT    /api/v1/property/{id}   # Mettre à jour
+GET    /api/v1/property        # Toutes les propriï¿½tï¿½s
+GET    /api/v1/property/{id}   # Propriï¿½tï¿½ spï¿½cifique
+POST   /api/v1/property    # Crï¿½er une propriï¿½tï¿½
+PUT    /api/v1/property/{id}   # Mettre ï¿½ jour
 DELETE /api/v1/property/{id}   # Supprimer
 ```
 
-### Owner (Propriétaires)
+### Owner (Propriï¿½taires)
 ```http
-GET    /api/v1/owner           # Tous les propriétaires
-GET    /api/v1/owner/{id}      # Propriétaire spécifique
-POST   /api/v1/owner           # Créer un propriétaire
-PUT    /api/v1/owner/{id}      # Mettre à jour
+GET    /api/v1/owner           # Tous les propriï¿½taires
+GET    /api/v1/owner/{id}      # Propriï¿½taire spï¿½cifique
+POST   /api/v1/owner           # Crï¿½er un propriï¿½taire
+PUT    /api/v1/owner/{id}      # Mettre ï¿½ jour
 DELETE /api/v1/owner/{id}  # Supprimer
 ```
 
 *Et ainsi de suite pour Tenant, Payment, MaintenanceRequest, PropertyImage, Document*
 
-### Exemple de Requête
+### Exemple de Requï¿½te
 
 ```bash
-# Récupérer tous les baux
+# Rï¿½cupï¿½rer tous les baux
 curl -X GET http://localhost:5000/api/v1/lease \
   -H "Content-Type: application/json"
 
-# Créer un bail
+# Crï¿½er un bail
 curl -X POST http://localhost:5000/api/v1/lease \
   -H "Content-Type: application/json" \
   -d '{
@@ -167,40 +167,40 @@ curl -X POST http://localhost:5000/api/v1/lease \
   }'
 ```
 
-## ?? Tests
+##    Tests
 
-### Exécuter les Tests
+### Exï¿½cuter les Tests
 
 ```bash
 # Tous les tests
 dotnet test
 
-# Tests spécifiques
+# Tests spï¿½cifiques
 dotnet test --filter "LeaseService"
 
 # Avec couverture de code
 dotnet test /p:CollectCoverage=true
 
-# Détails verbeux
+# Dï¿½tails verbeux
 dotnet test --verbosity detailed
 ```
 
 ### Structure des Tests
 
-Les tests sont organisés par service dans `ProjectTest/Services/` :
+Les tests sont organisï¿½s par service dans `ProjectTest/Services/` :
 
 ```
 ProjectTest/Services/
-??? LeaseServiceGetAllAsyncTests.cs
-??? LeaseServiceGetByIdAsyncTests.cs
-??? LeaseServiceCreateAsyncTests.cs
-??? LeaseServiceUpdateAsyncTests.cs
-??? LeaseServiceDeleteAsyncTests.cs
-??? OwnerServiceGetAllAsyncTests.cs
-??? OwnerServiceCreateAsyncTests.cs
-??? OwnerServiceUpdateAsyncTests.cs
-??? OwnerServiceDeleteAsyncTests.cs
-??? TestDataBuilder.cs
+ LeaseServiceGetAllAsyncTests.cs
+ LeaseServiceGetByIdAsyncTests.cs
+ LeaseServiceCreateAsyncTests.cs
+ LeaseServiceUpdateAsyncTests.cs
+ LeaseServiceDeleteAsyncTests.cs
+ OwnerServiceGetAllAsyncTests.cs
+ OwnerServiceCreateAsyncTests.cs
+ OwnerServiceUpdateAsyncTests.cs
+ OwnerServiceDeleteAsyncTests.cs
+ TestDataBuilder.cs
 ```
 
 ### Exemple de Test
@@ -227,7 +227,7 @@ public async Task GetAllAsync_WithMultipleLeases_ShouldReturnAllLeases()
 }
 ```
 
-## ?? Bonnes Pratiques
+##    Bonnes Pratiques
 
 ### CORS
 Configuration multi-environnement :
@@ -236,14 +236,14 @@ Configuration multi-environnement :
 
 ### API Versioning
 - Route : `/api/v1/[controller]`
-- Version par défaut : 1.0
+- Version par dï¿½faut : 1.0
 - Reporting dans headers
 
 ### Response Format
 ```json
 {
   "success": true,
-  "message": "Opération réussie",
+  "message": "Opï¿½ration rï¿½ussie",
   "data": { },
   "errors": null
 }
@@ -253,19 +253,19 @@ Configuration multi-environnement :
 ```json
 {
   "statusCode": 400,
-  "message": "Opération invalide",
-  "details": "Détail de l'erreur",
+  "message": "Opï¿½ration invalide",
+  "details": "Dï¿½tail de l'erreur",
   "timestamp": "2024-01-10T10:30:00Z"
 }
 ```
 
 ### Logging
 ```csharp
-_logger.LogInformation("Récupération de tous les baux");
-_logger.LogError(ex, "Erreur lors de la récupération");
+_logger.LogInformation("Rï¿½cupï¿½ration de tous les baux");
+_logger.LogError(ex, "Erreur lors de la rï¿½cupï¿½ration");
 ```
 
-### Codes HTTP Appropriés
+### Codes HTTP Appropriï¿½s
 - 200 OK
 - 201 Created
 - 204 No Content
@@ -273,7 +273,7 @@ _logger.LogError(ex, "Erreur lors de la récupération");
 - 404 Not Found
 - 500 Internal Server Error
 
-## ?? Configuration
+##    Configuration
 
 ### appsettings.json
 
@@ -290,52 +290,39 @@ _logger.LogError(ex, "Erreur lors de la récupération");
 
 ### Environnements
 
-- **Development** : CORS permissif, Swagger activé
-- **Production** : CORS restrictif, Swagger désactivé
+- **Development** : CORS permissif, Swagger activï¿½
+- **Production** : CORS restrictif, Swagger dï¿½sactivï¿½
 
-## ?? Sécurité
+##    Sï¿½curitï¿½
 
-### Implémentée
-- ? HTTPS redirection
-- ? CORS configurable
-- ? Input validation
-- ? Global exception handling
-- ? Logging centralisé
+### Implï¿½mentï¿½e
+-   HTTPS redirection
+-   CORS configurable
+-   Input validation
+-   Global exception handling
+-   Logging centralisï¿½
 
-### À Implémenter
+### ï¿½ Implï¿½menter
 - [ ] JWT Authentication
 - [ ] API Key validation
 - [ ] Rate limiting
 - [ ] Input sanitization
 
-## ?? Statistiques
+##    Statistiques
 
-| Métrique | Nombre |
+| Mï¿½trique | Nombre |
 |----------|--------|
 | Services | 8 |
-| Contrôleurs | 8 |
+| Contrï¿½leurs | 8 |
 | Tests Unitaires | 20+ |
 | Endpoints | 55+ |
-| Codes HTTP Gérés | 7 |
+| Codes HTTP Gï¿½rï¿½s | 7 |
 
-## ?? Documentation
+##    Documentation
 
 - [BEST_PRACTICES_REST_API.md](./BEST_PRACTICES_REST_API.md) - Bonnes pratiques
 - [TESTS_ORGANIZATION.md](./ProjectTest/TESTS_ORGANIZATION.md) - Organisation tests
-- [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) - Résumé final
+- [FINAL_SUMMARY.md](./FINAL_SUMMARY.md) - Rï¿½sumï¿½ final
 
-## ?? Support
-
-Pour les questions ou problèmes :
-- Créer une issue
-- Email : support@leasemanager.com
-
-## ?? Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
----
 
 **Version** : 1.0.0  
-**Dernière mise à jour** : 2024-01-10  
-**Statut** : ? Production Ready
